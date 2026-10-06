@@ -2,7 +2,7 @@
 using namespace std;
 
 int main() {
-    int numeros[5];
+    int numeros[10];
 
     cout << "Ingrese 5 numeros:" << endl;
 
