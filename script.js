@@ -60,9 +60,43 @@ function calculateResult() {
   }
 }
 // ==========================================
+// SINTETIZADOR DE SONIDO DE CARGA DE KI
+// ==========================================
+function reproducirSonidoKi() {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(120, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 1.2);
+
+    gain.gain.setValueAtTime(0.01, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.2, ctx.currentTime + 0.8);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.3);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 1.3);
+  } catch (e) {
+    console.log("Audio no soportado");
+  }
+}
+
+// ==========================================
 // LÓGICA DE TRANSFORMACIÓN SUPER SAIYAN
 // ==========================================
-function transformarSuperSaiyan() {
+function transformarSuperSaiyan(event) {
+  if (event) event.preventDefault();
+  
+  reproducirSonidoKi();
+
   const body = document.body;
   const btn = document.getElementById('btnTransform');
 
@@ -70,4 +104,9 @@ function transformarSuperSaiyan() {
 
   if (body.classList.contains('modo-saiyan')) {
     btn.innerHTML = "⚡ MODO NORMAL (DESACTIVAR) ⚡";
-    btn.style.background = "linear-gradient(45deg, #00e5ff, #
+    btn.style.background = "linear-gradient(45deg, #00e5ff, #00ff66)";
+  } else {
+    btn.innerHTML = "⚡ ¡TRANSFORMAR EN SUPER SAIYAN! ⚡";
+    btn.style.background = "linear-gradient(45deg, #ffcc00, #ff8c00)";
+  }
+}
