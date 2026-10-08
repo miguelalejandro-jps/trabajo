@@ -110,3 +110,29 @@ function transformarSuperSaiyan(event) {
     btn.style.background = "linear-gradient(45deg, #ffcc00, #ff8c00)";
   }
 }
+// ==========================================
+// LÓGICA DEL LABORATORIO Y ENSAMBLAJE
+// ==========================================
+function verificarFormulaRadar() {
+  const comp1 = document.getElementById('comp1').checked;
+  const comp2 = document.getElementById('comp2').checked;
+  const comp3 = document.getElementById('comp3').checked;
+
+  const radarVisual = document.getElementById('radarVisual');
+  const radarDot = document.getElementById('radarDot');
+  const radarStatusText = document.getElementById('radarStatusText');
+
+  if (comp1 && comp2 && comp3) {
+    // Cuando los 3 componentes están activos
+    radarVisual.className = "radar-box radar-completo";
+    radarDot.style.display = "block";
+    radarStatusText.innerHTML = "✨ ¡RADAR DEL DRAGÓN ENSAMBLADO Y OPERATIVO!";
+    radarStatusText.style.color = "#ffcc00";
+  } else {
+    // Cuando falta algún componente
+    radarVisual.className = "radar-box radar-incompleto";
+    radarDot.style.display = "none";
+    radarStatusText.innerHTML = "⚠️ Estado: Faltan componentes";
+    radarStatusText.style.color = "#888";
+  }
+}
