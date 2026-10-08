@@ -213,14 +213,28 @@
       </button>
     </div>
   </section>
-<!-- SECCIÓN NAVE ESPACIAL: LABORATORIO CÁPSULA CORP -->
+<!-- SECCIÓN: RADAR DEL DRAGÓN INTERACTIVO -->
   <section id="laboratorio-section" style="padding: 50px 8%; text-align: center;">
     <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #00e5ff;">
-      🛸 Laboratorio de la <span style="color: #ffcc00;">Nave Espacial</span>
+      🐉 Radar del Dragón <span style="color: #ffcc00;">Cápsula Corp</span>
     </h2>
-    <p style="color: #aaa; margin-bottom: 30px;">
-      Selecciona los componentes necesarios para ensamblar la fórmula del Radar del Dragón.
+    <p style="color: #aaa; margin-bottom: 25px;">
+      Presiona el botón superior del radar para iniciar el rastreo de las 7 Esferas del Dragón.
     </p>
+
+    <div class="dragon-radar-device">
+      <!-- Botón físico superior para encender/escaneo -->
+      <button class="radar-top-btn" onclick="toggleRadarDragon(event)" title="Presionar para Rastrear"></button>
+      
+      <div class="radar-screen-border">
+        <canvas id="dragonRadarCanvas" width="250" height="250"></canvas>
+      </div>
+    </div>
+
+    <p id="radarStatusText" style="margin-top: 15px; color: #ff3300; font-weight: bold; font-size: 1.1rem;">
+      🔴 RADAR APAGADO (Presiona el botón superior)
+    </p>
+  </section>
 
     <div class="lab-nave-container">
       <div class="lab-screen">
