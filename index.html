@@ -213,7 +213,44 @@
       </button>
     </div>
   </section>
+<!-- SECCIÓN NAVE ESPACIAL: LABORATORIO CÁPSULA CORP -->
+  <section id="laboratorio-section" style="padding: 50px 8%; text-align: center;">
+    <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #00e5ff;">
+      🛸 Laboratorio de la <span style="color: #ffcc00;">Nave Espacial</span>
+    </h2>
+    <p style="color: #aaa; margin-bottom: 30px;">
+      Selecciona los componentes necesarios para ensamblar la fórmula del Radar del Dragón.
+    </p>
 
+    <div class="lab-nave-container">
+      <div class="lab-screen">
+        <h3>🔬 ENSAMBLAJE DEL RADAR DEL DRAGÓN</h3>
+        
+        <!-- Opciones de fórmulas / componentes -->
+        <div class="lab-formula-options">
+          <label class="lab-item">
+            <input type="checkbox" id="comp1" onchange="verificarFormulaRadar()">
+            <span>Lente de Cristal Pulsante</span>
+          </label>
+          <label class="lab-item">
+            <input type="checkbox" id="comp2" onchange="verificarFormulaRadar()">
+            <span>Microchip de Frecuencia Ki</span>
+          </label>
+          <label class="lab-item">
+            <input type="checkbox" id="comp3" onchange="verificarFormulaRadar()">
+            <span>Botón de Rastreos Térmicos</span>
+          </label>
+        </div>
+
+        <!-- Pantalla del Radar Ensamblado -->
+        <div id="radarVisual" class="radar-box radar-incompleto">
+          <div class="radar-grid"></div>
+          <div id="radarDot" class="radar-dot"></div>
+          <p id="radarStatusText">⚠️ Estado: Faltan componentes</p>
+        </div>
+      </div>
+    </div>
+  </section>
   <!-- Footer -->
   <footer id="contacto" class="footer">
     <p>&copy; 2026 Creado para <strong>GitHub Pages</strong> con temática de Dragon Ball</p>
