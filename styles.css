@@ -1,0 +1,461 @@
+/* =========================================================
+   VARIABLES GLOBALES & CONFIGURACIÓN - DRAGON BALL THEME
+   ========================================================= */
+:root {
+  --bg-dark: #0a0814;                      /* Fondo espacio / Universo 7 */
+  --bg-card: rgba(20, 15, 38, 0.65);       /* Cristal estilo Scouter / Radar */
+  --border-card: rgba(255, 153, 0, 0.25);   /* Borde Naranja Ki */
+  
+  /* Colores de Energía Dragon Ball */
+  --dragon-orange: #ff7700;                 /* Traje de Goku / Esferas */
+  --dragon-gold: #ffcc00;                   /* Aura Super Saiyan */
+  --saiyan-blue: #00d2ff;                   /* Kamehameha / Super Saiyan Blue */
+  --god-magenta: #e000ff;                   /* Aura Hakai / Ki Divino */
+  
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   AURAS DE KI Y ENERGÍA DE FONDO (GLOW EFFECT)
+   ========================================================= */
+.bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(110px);
+  z-index: -1;
+  opacity: 0.55;
+  animation: kiAuraPulse 8s ease-in-out infinite alternate;
+}
+
+/* Aura Kamehameha */
+.glow-1 {
+  width: 480px;
+  height: 480px;
+  background: var(--saiyan-blue);
+  top: -100px;
+  left: -100px;
+}
+
+/* Aura Super Saiyan Naranja / Dorado */
+.glow-2 {
+  width: 520px;
+  height: 520px;
+  background: var(--dragon-orange);
+  top: 35%;
+  right: -150px;
+  animation-delay: -2.5s;
+}
+
+/* Aura de Poder Supremo */
+.glow-3 {
+  width: 420px;
+  height: 420px;
+  background: var(--dragon-gold);
+  bottom: -100px;
+  left: 20%;
+  animation-delay: -5s;
+}
+
+@keyframes kiAuraPulse {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.7;
+    filter: blur(90px);
+  }
+  100% {
+    transform: translate(45px, 60px) scale(1.2);
+    opacity: 0.5;
+  }
+}
+
+/* =========================================================
+   BARRA DE NAVEGACIÓN (RADAR DRAGON BALL)
+   ========================================================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 8%;
+  background: rgba(10, 8, 20, 0.85);
+  backdrop-filter: blur(14px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid var(--dragon-orange);
+  box-shadow: 0 4px 25px rgba(255, 119, 0, 0.25);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+}
+
+.logo .dot {
+  color: var(--dragon-gold);
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--dragon-gold);
+  text-shadow: 0 0 12px var(--dragon-gold);
+}
+
+.btn-nav {
+  background: rgba(255, 119, 0, 0.15);
+  color: var(--dragon-gold) !important;
+  padding: 8px 22px;
+  border-radius: 30px;
+  border: 1px solid var(--dragon-orange);
+  box-shadow: 0 0 12px rgba(255, 119, 0, 0.3);
+  transition: all 0.3s ease !important;
+}
+
+.btn-nav:hover {
+  background: var(--dragon-orange) !important;
+  color: #000 !important;
+  box-shadow: 0 0 25px var(--dragon-orange);
+  transform: scale(1.05);
+}
+
+/* =========================================================
+   HERO SECTION (AURA DE PODER)
+   ========================================================= */
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px 8% 60px;
+  gap: 60px;
+  min-height: calc(100vh - 90px);
+}
+
+.hero-content {
+  max-width: 600px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 18px;
+  background: rgba(255, 119, 0, 0.12);
+  border: 1px solid var(--dragon-orange);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--dragon-gold);
+  margin-bottom: 24px;
+  box-shadow: 0 0 15px rgba(255, 119, 0, 0.2);
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  line-height: 1.15;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+/* Texto Gradiente Energía Super Saiyan / Kamehameha */
+.gradient-text {
+  background: linear-gradient(90deg, #ffcc00, #ff7700, #00d2ff, #ffcc00);
+  background-size: 300% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: kiEnergyCharge 4s linear infinite;
+  filter: drop-shadow(0 0 12px rgba(255, 204, 0, 0.4));
+}
+
+@keyframes kiEnergyCharge {
+  to { background-position: 300% center; }
+}
+
+.hero-description {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  margin-bottom: 36px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+/* BOTONES DE ENERGÍA KI */
+.btn {
+  padding: 14px 34px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--dragon-orange), #ff0055);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(255, 119, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-primary:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 15px 40px rgba(255, 119, 0, 0.8);
+}
+
+.btn-secondary {
+  background: rgba(0, 210, 255, 0.1);
+  color: var(--saiyan-blue);
+  border: 1px solid var(--saiyan-blue);
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+}
+
+.btn-secondary:hover {
+  background: var(--saiyan-blue);
+  color: #000;
+  box-shadow: 0 0 30px var(--saiyan-blue);
+  transform: translateY(-4px);
+}
+
+/* =========================================================
+   TARJETAS ESTILO SCOUTER & ESFERAS DEL DRAGÓN
+   ========================================================= */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--border-card);
+  border-radius: 24px;
+  padding: 32px;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hero-card-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.main-card {
+  max-width: 380px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 119, 0, 0.1);
+}
+
+.main-card:hover {
+  transform: translateY(-12px) rotate(1.5deg);
+  border-color: var(--dragon-gold);
+  box-shadow: 0 25px 60px rgba(255, 204, 0, 0.35), inset 0 0 30px rgba(255, 204, 0, 0.2);
+}
+
+.card-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--dragon-gold);
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 900;
+  padding: 4px 12px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px var(--dragon-gold);
+}
+
+.card-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 10px var(--dragon-gold));
+}
+
+.main-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: var(--dragon-gold);
+}
+
+.main-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+.tech-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tech-tags span {
+  font-size: 0.75rem;
+  background: rgba(255, 119, 0, 0.15);
+  padding: 5px 14px;
+  border-radius: 20px;
+  color: var(--dragon-gold);
+  border: 1px solid rgba(255, 119, 0, 0.3);
+  font-weight: 700;
+}
+
+/* =========================================================
+   SECCIÓN NIVEL DE PELEA (ESTADÍSTICAS)
+   ========================================================= */
+.stats-section {
+  display: flex;
+  justify-content: space-around;
+  padding: 40px 8%;
+  margin: 20px 8%;
+  background: rgba(255, 119, 0, 0.05);
+  border: 1px solid var(--dragon-orange);
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(255, 119, 0, 0.15);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-item h2 {
+  font-size: 2.8rem;
+  color: var(--dragon-gold);
+  font-weight: 800;
+  text-shadow: 0 0 20px rgba(255, 204, 0, 0.6);
+}
+
+.stat-item p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* =========================================================
+   CARACTERÍSTICAS DE ENERGÍA
+   ========================================================= */
+.features-section {
+  padding: 80px 8%;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  font-weight: 800;
+}
+
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.feature-card {
+  text-align: left;
+  border-color: rgba(255, 119, 0, 0.2);
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--saiyan-blue);
+  box-shadow: 0 15px 35px rgba(0, 210, 255, 0.3);
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 8px var(--saiyan-blue));
+}
+
+.feature-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: var(--saiyan-blue);
+}
+
+.feature-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* =========================================================
+   FOOTER UNIVERSO 7
+   ========================================================= */
+.footer {
+  text-align: center;
+  padding: 40px 8%;
+  border-top: 1px solid var(--border-card);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 40px;
+  background: rgba(10, 8, 20, 0.9);
+}
+
+.footer strong {
+  color: var(--dragon-gold);
+}
+
+/* =========================================================
+   RESPONSIVO (MÓVILES Y TABLETS)
+   ========================================================= */
+@media (max-width: 900px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    padding-top: 40px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .stats-section {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
