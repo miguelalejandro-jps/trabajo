@@ -160,6 +160,46 @@
           <div class="scouter-target">🎯 ANALIZANDO OBJETIVO...</div>
         </div>
       </div>
+      <!-- SECCIÓN NUEVA: CALCULADORA CÁPSULA CORP -->
+  <section id="calculadora-section" style="padding: 40px 8%; text-align: center;">
+    <h2 style="font-size: 2rem; margin-bottom: 10px; color: #00e5ff;">
+      Calculadora <span style="color: #ffcc00;">Cápsula Corp</span>
+    </h2>
+    <p style="color: #aaa; margin-bottom: 20px;">
+      Calcula las coordenadas y niveles de poder para tus misiones.
+    </p>
+
+    <div class="calc-container">
+      <!-- Pantalla de la calculadora -->
+      <input type="text" id="calcDisplay" class="calc-display" value="0" readonly>
+
+      <!-- Botones -->
+      <div class="calc-buttons">
+        <button onclick="clearCalc()" class="btn-calc btn-clear">C</button>
+        <button onclick="deleteLast()" class="btn-calc btn-op">⌫</button>
+        <button onclick="appendCalc('/')" class="btn-calc btn-op">÷</button>
+        <button onclick="appendCalc('*')" class="btn-calc btn-op">×</button>
+
+        <button onclick="appendCalc('7')" class="btn-calc">7</button>
+        <button onclick="appendCalc('8')" class="btn-calc">8</button>
+        <button onclick="appendCalc('9')" class="btn-calc">9</button>
+        <button onclick="appendCalc('-')" class="btn-calc btn-op">-</button>
+
+        <button onclick="appendCalc('4')" class="btn-calc">4</button>
+        <button onclick="appendCalc('5')" class="btn-calc">5</button>
+        <button onclick="appendCalc('6')" class="btn-calc">6</button>
+        <button onclick="appendCalc('+')" class="btn-calc btn-op">+</button>
+
+        <button onclick="appendCalc('1')" class="btn-calc">1</button>
+        <button onclick="appendCalc('2')" class="btn-calc">2</button>
+        <button onclick="appendCalc('3')" class="btn-calc">3</button>
+        <button onclick="calculateResult()" class="btn-calc btn-equal">=</button>
+
+        <button onclick="appendCalc('0')" class="btn-calc btn-zero">0</button>
+        <button onclick="appendCalc('.')" class="btn-calc">.</button>
+      </div>
+    </div>
+  </section>
 
       <!-- Botón para activar el análisis -->
       <button class="btn-scouter" onclick="analizarPoder()">
