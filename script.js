@@ -289,33 +289,47 @@ window.addEventListener('DOMContentLoaded', limpiarRadar);
 // ==========================================
 // SALUDO DE VOZ AL INGRESAR A LA PÁGINA
 // ==========================================
+let bienvenidaSonada = false;
+
 function decirBienvenida() {
+  if (bienvenidaSonada) return;
   if (!('speechSynthesis' in window)) return;
 
-  // Cancela cualquier audio previo
-  window.speechSynthesis.cancel();
-
+  // Obtener las voces disponibles en el sistema/navegador
+  const voces = window.speechSynthesis.getVoices();
   const mensaje = new SpeechSynthesisUtterance('¡Bienvenido de nuevo!');
-  mensaje.lang = 'es-ES'; // Idioma español
-  mensaje.rate = 0.95;    // Velocidad normal/suave
-  mensaje.pitch = 1.0;    // Tono de voz natural
 
-  // Intenta reproducir la voz
+  // Buscar una voz en español
+  const vozEspanol = voces.find(v => v.lang.startsWith('es'));
+  if (vozEspanol) {
+    mensaje.voice = vozEspanol;
+  }
+
+  mensaje.lang = 'es-ES';
+  mensaje.rate = 0.9;  // Velocidad ligeramente moderada para que se entienda claro
+  mensaje.pitch = 1.0; // Tono natural
+
+  mensaje.onend = () => { bienvenidaSonada = true; };
+  mensaje.onerror = () => { bienvenidaSonada = true; };
+
+  window.speechSynthesis.cancel(); // Limpia peticiones atascadas
   window.speechSynthesis.speak(mensaje);
+  bienvenidaSonada = true;
 }
 
-// Intentar reproducir al cargar la página
-window.addEventListener('DOMContentLoaded', () => {
-  // Pequeña espera para asegurar que las voces del navegador estén cargadas
-  setTimeout(() => {
-    decirBienvenida();
-  }, 500);
-});
+// Cargar voces si el navegador las tiene pendientes
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = () => {
+    window.speechSynthesis.getVoices();
+  };
+}
 
-// Respaldo por si el navegador bloquea el audio automático antes del primer clic
-window.addEventListener('click', () => {
-  if (window.speechSynthesis && !window.speechSynthesis.speaking) {
-    // Si no ha sonado, reproduce en la primera interacción
-    decirBienvenida();
-  }
-}, { once: true });
+// Disparar en la primera interacción (clic o toque en la pantalla)
+const activarVozAlClic = () => {
+  decirBienvenida();
+  window.removeEventListener('click', activarVozAlClic);
+  window.removeEventListener('touchstart', activarVozAlClic);
+};
+
+window.addEventListener('click', activarVozAlClic);
+window.addEventListener('touchstart', activarVozAlClic);
