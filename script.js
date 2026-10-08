@@ -286,3 +286,36 @@ function animarEscaneoRadar() {
 }
 
 window.addEventListener('DOMContentLoaded', limpiarRadar);
+// ==========================================
+// SALUDO DE VOZ AL INGRESAR A LA PÁGINA
+// ==========================================
+function decirBienvenida() {
+  if (!('speechSynthesis' in window)) return;
+
+  // Cancela cualquier audio previo
+  window.speechSynthesis.cancel();
+
+  const mensaje = new SpeechSynthesisUtterance('¡Bienvenido de nuevo!');
+  mensaje.lang = 'es-ES'; // Idioma español
+  mensaje.rate = 0.95;    // Velocidad normal/suave
+  mensaje.pitch = 1.0;    // Tono de voz natural
+
+  // Intenta reproducir la voz
+  window.speechSynthesis.speak(mensaje);
+}
+
+// Intentar reproducir al cargar la página
+window.addEventListener('DOMContentLoaded', () => {
+  // Pequeña espera para asegurar que las voces del navegador estén cargadas
+  setTimeout(() => {
+    decirBienvenida();
+  }, 500);
+});
+
+// Respaldo por si el navegador bloquea el audio automático antes del primer clic
+window.addEventListener('click', () => {
+  if (window.speechSynthesis && !window.speechSynthesis.speaking) {
+    // Si no ha sonado, reproduce en la primera interacción
+    decirBienvenida();
+  }
+}, { once: true });
