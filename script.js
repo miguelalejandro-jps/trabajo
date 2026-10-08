@@ -59,3 +59,15 @@ function calculateResult() {
     setTimeout(() => { clearCalc(); }, 1500);
   }
 }
+// ==========================================
+// LÓGICA DE TRANSFORMACIÓN SUPER SAIYAN
+// ==========================================
+function transformarSuperSaiyan() {
+  const body = document.body;
+  const btn = document.getElementById('btnTransform');
+
+  body.classList.toggle('modo-saiyan');
+
+  if (body.classList.contains('modo-saiyan')) {
+    btn.innerHTML = "⚡ MODO NORMAL (DESACTIVAR) ⚡";
+    btn.style.background = "linear-gradient(45deg, #00e5ff, #
