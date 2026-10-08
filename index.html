@@ -135,11 +135,42 @@
     </div>
   </section>
 
+  <!-- SECCIÓN NUEVA: RASTREADOR / SCOUTER -->
+  <section id="scouter-section" style="padding: 60px 8%; text-align: center;">
+    <h2 style="font-size: 2.2rem; margin-bottom: 10px;">
+      Rastreador de Ki <span style="color: #ffcc00;">Scouter</span>
+    </h2>
+    <p style="color: #aaa; margin-bottom: 25px;">
+      Colócate el Scouter para analizar y medir el poder de pelea de tu proyecto o visitante.
+    </p>
+
+    <div class="scouter-box">
+      <!-- Visual del Scouter Glass (Lente verde neón) -->
+      <div class="scouter-glass">
+        <div class="scouter-grid"></div>
+        <div class="scouter-screen">
+          <span class="scouter-status" id="scouterStatus">ESCANER: LISTO</span>
+          <div class="scouter-readout" id="scouterPower">---</div>
+          <div class="scouter-target">🎯 ANALIZANDO OBJETIVO...</div>
+        </div>
+      </div>
+
+      <!-- Botón para activar el análisis -->
+      <button class="btn-scouter" onclick="analizarPoder()">
+        🔍 Escanear Nivel de Poder
+      </button>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer id="contacto" class="footer">
-    <p>© 2026 Creado para <strong>GitHub Pages</strong> con temática de Dragon Ball</p>
+    <p>&copy; 2026 Creado para <strong>GitHub Pages</strong> con temática de Dragon Ball</p>
   </footer>
 
+  <!-- ARCHIVO DE JAVASCRIPT INTERACTIVO -->
+  <script src="script.js"></script>
+</body>
+</html>
   <!-- ARCHIVO DE JAVASCRIPT INTERACTIVO -->
   <script src="script.js"></script>
 </body>
