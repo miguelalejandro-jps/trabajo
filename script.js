@@ -23,3 +23,39 @@ function analizarPoder() {
     }
   }, 80);
 }
+// ==========================================
+// LÓGICA DE LA CALCULADORA CÁPSULA CORP
+// ==========================================
+function appendCalc(value) {
+  const display = document.getElementById('calcDisplay');
+  if (!display) return;
+
+  if (display.value === '0' && value !== '.') {
+    display.value = value;
+  } else {
+    display.value += value;
+  }
+}
+
+function clearCalc() {
+  const display = document.getElementById('calcDisplay');
+  if (display) display.value = '0';
+}
+
+function deleteLast() {
+  const display = document.getElementById('calcDisplay');
+  if (!display) return;
+  display.value = display.value.slice(0, -1);
+  if (display.value === '') display.value = '0';
+}
+
+function calculateResult() {
+  const display = document.getElementById('calcDisplay');
+  if (!display) return;
+  try {
+    display.value = eval(display.value);
+  } catch (error) {
+    display.value = 'ERROR';
+    setTimeout(() => { clearCalc(); }, 1500);
+  }
+}
