@@ -1029,3 +1029,72 @@ function renderizarEscenarioPrevio() {
 window.addEventListener('DOMContentLoaded', () => {
   seleccionarGuerrero('Goku');
 });
+// ==========================================
+// FONDO INTERACTIVO Y ESFERAS DEL DRAGÓN
+// ==========================================
+let esferasRecolectadas = 0;
+
+function crearEsferasInteractivas() {
+  const posiciones = [
+    { top: '12%', left: '8%' },
+    { top: '25%', left: '85%' },
+    { top: '45%', left: '5%' },
+    { top: '60%', left: '90%' },
+    { top: '75%', left: '12%' },
+    { top: '85%', left: '82%' },
+    { top: '35%', left: '48%' }
+  ];
+
+  posiciones.forEach((pos, index) => {
+    const esfera = document.createElement('div');
+    esfera.className = 'esfera-db-interactiva';
+    esfera.style.top = pos.top;
+    esfera.style.left = pos.left;
+    esfera.title = `Esfera del Dragón N° ${index + 1} - ¡Haz clic para recolectar!`;
+
+    // Evento interactivo al hacer clic en las imágenes de las esferas
+    esfera.addEventListener('click', () => {
+      sonarBipRadar();
+      esferasRecolectadas++;
+      esfera.style.transform = 'scale(2) rotate(360deg)';
+      esfera.style.opacity = '0';
+      esfera.style.transition = 'all 0.5s ease';
+
+      setTimeout(() => esfera.remove(), 500);
+
+      if (esferasRecolectadas === 7) {
+        setTimeout(() => {
+          alert('✨ ¡HAS REUNIDO LAS 7 ESFERAS DEL DRAGÓN! ¡SHENLONG CUMPLIRÁ TU DESEO!');
+          transformarSuperSaiyan();
+        }, 600);
+      }
+    });
+
+    document.body.appendChild(esfera);
+  });
+}
+
+// Crear la Nube Voladora interactiva
+function crearNubeVoladora() {
+  const nube = document.createElement('div');
+  nube.id = 'nube-voladora-img';
+  nube.title = '¡La Nube Voladora de Goku! Haz clic sobre ella.';
+  
+  nube.addEventListener('click', () => {
+    reproducirSonidoKi();
+    alert('☁️ ¡Súbete a la Nube Voladora! Tu Ki ha aumentado.');
+  });
+
+  document.body.appendChild(nube);
+}
+
+// Botón para alternar el Fondo Alegre
+function alternarFondoAlegre() {
+  document.body.classList.toggle('fondo-alegre');
+}
+
+// Inicializar elementos alegres al cargar
+window.addEventListener('DOMContentLoaded', () => {
+  crearEsferasInteractivas();
+  crearNubeVoladora();
+});
