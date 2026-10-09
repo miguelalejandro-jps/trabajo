@@ -935,3 +935,138 @@ body.modo-saiyan .profile-name {
   pointer-events: none; /* Permite hacer clic en la página sin interrupciones */
   z-index: 9999;       /* Vuela por encima de los elementos */
 }
+/* ==========================================
+   ESTILOS CHATBOT CAPSULE CORP
+   ========================================== */
+#chatbot-toggle-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #00e5ff 0%, #0055ff 100%);
+  border: 2px solid #fff;
+  font-size: 1.8rem;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+  z-index: 10000;
+  transition: transform 0.3s ease;
+}
+
+#chatbot-toggle-btn:hover {
+  transform: scale(1.1) rotate(10deg);
+}
+
+#chatbot-container {
+  position: fixed;
+  bottom: 95px;
+  right: 25px;
+  width: 330px;
+  height: 420px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 2px solid #00e5ff;
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  z-index: 10000;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+#chatbot-container.chatbot-oculto {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px) scale(0.9);
+}
+
+.chatbot-header {
+  background: #0f172a;
+  color: #00e5ff;
+  padding: 12px 15px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.3);
+}
+
+.chatbot-header .close-btn {
+  background: transparent;
+  border: none;
+  color: #ff5f56;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.chatbot-body {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+
+.message {
+  padding: 8px 12px;
+  border-radius: 10px;
+  max-width: 80%;
+  line-height: 1.4;
+}
+
+.bot-message {
+  background: rgba(0, 229, 255, 0.15);
+  color: #e2e8f0;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  align-self: flex-start;
+}
+
+.user-message {
+  background: #0088ff;
+  color: #fff;
+  align-self: flex-end;
+}
+
+.chatbot-footer {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid rgba(0, 229, 255, 0.3);
+  gap: 5px;
+}
+
+.chatbot-footer input {
+  flex: 1;
+  background: #020617;
+  border: 1px solid #00e5ff;
+  border-radius: 8px;
+  padding: 8px;
+  color: #fff;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.chatbot-footer button {
+  background: #00e5ff;
+  color: #000;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Modo Super Saiyan para el Chatbot */
+body.modo-saiyan #chatbot-toggle-btn {
+  background: radial-gradient(circle, #ffcc00 0%, #ff6600 100%);
+  box-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
+}
+
+body.modo-saiyan #chatbot-container {
+  border-color: #ffcc00;
+  box-shadow: 0 0 30px rgba(255, 204, 0, 0.5);
+}
