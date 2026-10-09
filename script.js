@@ -572,3 +572,56 @@ function crearModelo3DSaiyan() {
 }
 
 window.addEventListener('DOMContentLoaded', crearModelo3DSaiyan);
+// ==========================================
+// LÓGICA DEL CHATBOT INTERACTIVO
+// ==========================================
+function toggleChatbot() {
+  const container = document.getElementById('chatbot-container');
+  container.classList.toggle('chatbot-oculto');
+}
+
+function detectarEnter(e) {
+  if (e.key === 'Enter') enviarMensajeChatbot();
+}
+
+function enviarMensajeChatbot() {
+  const input = document.getElementById('chatbot-input');
+  const texto = input.value.trim().toLowerCase();
+  if (!texto) return;
+
+  // Agregar mensaje del usuario
+  agregarMensaje(input.value, 'user-message');
+  input.value = '';
+
+  // Generar respuesta de la IA
+  setTimeout(() => {
+    let respuesta = "No comprendo esa consulta. Escribe 'ayuda' para ver qué puedo hacer.";
+
+    if (texto.includes('hola') || texto.includes('buenas')) {
+      respuesta = "¡Hola! Soy la IA de Capsule Corp. ¿En qué te puedo colaborar sobre Miguel Paspuel?";
+    } else if (texto.includes('quien es') || texto.includes('miguel') || texto.includes('nombre')) {
+      respuesta = "Miguel Paspuel es un estudiante de Ciberseguridad en el TESA apasionado por la seguridad informática y el desarrollo web.";
+    } else if (texto.includes('tesa') || texto.includes('estudios') || texto.includes('carrera')) {
+      respuesta = "Miguel cursa la carrera de Ciberseguridad en el Tecnológico San Antonio (TESA).";
+    } else if (texto.includes('habilidades') || texto.includes('skills') || texto.includes('que sabe')) {
+      respuesta = "Habilidades principales: HTML5, CSS3, JavaScript, Pentesting, Redes y Protección de Datos.";
+    } else if (texto.includes('ki') || texto.includes('poder') || texto.includes('saiyan')) {
+      respuesta = "¡El nivel de Ki de Miguel supera los 9000! Usa el botón Super Saiyan en la parte superior para activarlo.";
+    } else if (texto.includes('ayuda') || texto.includes('comandos')) {
+      respuesta = "Puedes preguntarme sobre: 'Miguel', 'TESA', 'Habilidades', 'Ki' o 'Contacto'.";
+    } else if (texto.includes('contacto') || texto.includes('correo') || texto.includes('email')) {
+      respuesta = "Puedes contactar a Miguel a través de sus redes o la sección de contacto al final de esta página.";
+    }
+
+    agregarMensaje(respuesta, 'bot-message');
+  }, 400);
+}
+
+function agregarMensaje(texto, clase) {
+  const body = document.getElementById('chatbot-messages');
+  const msg = document.createElement('div');
+  msg.className = `message ${clase}`;
+  msg.innerText = texto;
+  body.appendChild(msg);
+  body.scrollTop = body.scrollHeight;
+}
