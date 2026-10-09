@@ -309,58 +309,58 @@
   <button id="chatbot-toggle-btn" onclick="toggleChatbot()" title="Abrir Asistente">
     🤖
   </button>
-  <!-- SECCIÓN MINIJUEGO DRAGON BALL 1 VS 1 -->
-<section id="juego-section" style="text-align: center; margin: 50px auto; max-width: 700px; background: rgba(15, 23, 42, 0.9); border: 2px solid #00e5ff; border-radius: 15px; padding: 20px; box-shadow: 0 0 25px rgba(0, 229, 255, 0.3);">
-  <h2 style="color: #ffcc00; font-family: sans-serif; margin-bottom: 10px;">
-    ⚔️ CAPSULE CORP: TORNEO 1 VS 1 ⚔️
+<!-- SECCIÓN MINIJUEGO DRAGON BALL 1 VS 1 ANIME -->
+<section id="juego-section" style="text-align: center; margin: 50px auto; max-width: 750px; background: rgba(15, 23, 42, 0.95); border: 2px solid #00e5ff; border-radius: 20px; padding: 25px; box-shadow: 0 0 35px rgba(0, 229, 255, 0.4);">
+  <h2 style="color: #ffcc00; font-family: sans-serif; margin-bottom: 15px; font-size: 1.6rem; text-shadow: 0 0 10px rgba(255, 204, 0, 0.6);">
+    ⚔️ TORNEO DEL PODER: 1 VS 1 ⚔️
   </h2>
   
-  <!-- PANTALLA DE SELECCIÓN DE PERSONAJES -->
+  <!-- SELECCIÓN DE PERSONAJES CON BOTONES ILUSTRADOS -->
   <div id="seleccion-personajes" style="margin-bottom: 20px;">
-    <p style="color: #00e5ff; font-size: 0.95rem;">Selecciona tu Guerrero:</p>
-    <div style="display: flex; justify-content: center; gap: 15px; margin-top: 10px;">
-      <button onclick="seleccionarGuerrero('Goku')" class="btn-guerrero" id="btn-goku" style="padding: 10px 15px; background: #ff6600; color: #fff; border: 2px solid #fff; border-radius: 8px; cursor: pointer; font-weight: bold;">
-        💥 Goku (Super Saiyan)
+    <p style="color: #00e5ff; font-size: 1rem; font-weight: bold; margin-bottom: 10px;">Elige a tu Guerrero:</p>
+    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+      <button onclick="seleccionarGuerrero('Goku')" class="btn-guerrero" style="padding: 10px 18px; background: linear-gradient(185deg, #ff8c00, #ff4500); color: #fff; border: 2px solid #ffcc00; border-radius: 10px; cursor: pointer; font-weight: bold; box-shadow: 0 0 12px rgba(255, 140, 0, 0.5);">
+        🔥 Goku (Super Saiyan)
       </button>
-      <button onclick="seleccionarGuerrero('Vegeta')" class="btn-guerrero" id="btn-vegeta" style="padding: 10px 15px; background: #0055ff; color: #fff; border: 2px solid #fff; border-radius: 8px; cursor: pointer; font-weight: bold;">
+      <button onclick="seleccionarGuerrero('Vegeta')" class="btn-guerrero" style="padding: 10px 18px; background: linear-gradient(185deg, #0055ff, #001199); color: #fff; border: 2px solid #00e5ff; border-radius: 10px; cursor: pointer; font-weight: bold; box-shadow: 0 0 12px rgba(0, 229, 255, 0.5);">
         👑 Vegeta (Príncipe)
       </button>
-      <button onclick="seleccionarGuerrero('Piccolo')" class="btn-guerrero" id="btn-piccolo" style="padding: 10px 15px; background: #00cc44; color: #fff; border: 2px solid #fff; border-radius: 8px; cursor: pointer; font-weight: bold;">
+      <button onclick="seleccionarGuerrero('Piccolo')" class="btn-guerrero" style="padding: 10px 18px; background: linear-gradient(185deg, #00cc44, #005511); color: #fff; border: 2px solid #00ff66; border-radius: 10px; cursor: pointer; font-weight: bold; box-shadow: 0 0 12px rgba(0, 255, 102, 0.5);">
         👽 Piccolo (Namek)
       </button>
     </div>
   </div>
 
-  <!-- BARRAS DE VIDA -->
-  <div style="display: flex; justify-content: space-between; max-width: 600px; margin: 0 auto 10px auto; color: #fff; font-weight: bold;">
-    <span id="nombre-p1" style="color: #00e5ff;">Jugador 1</span>
-    <span style="color: #ff3300;">VS</span>
-    <span id="nombre-p2" style="color: #ffcc00;">Rival (IA)</span>
+  <!-- BARRAS DE VIDA Y NOMBRES ESTILO ANIME -->
+  <div style="display: flex; justify-content: space-between; max-width: 650px; margin: 0 auto 8px auto; color: #fff; font-weight: bold; font-size: 1.1rem;">
+    <span id="nombre-p1" style="color: #00e5ff; text-shadow: 0 0 8px #00e5ff;">Goku SSJ</span>
+    <span style="color: #ff3300; font-size: 1.3rem;">VS</span>
+    <span id="nombre-p2" style="color: #ffcc00; text-shadow: 0 0 8px #ffcc00;">Vegeta (IA)</span>
   </div>
 
-  <div style="display: flex; justify-content: space-between; max-width: 600px; margin: 0 auto 15px auto; gap: 20px;">
-    <div style="flex: 1; background: #333; height: 18px; border-radius: 10px; border: 1px solid #fff; overflow: hidden;">
-      <div id="hp-p1" style="width: 100%; height: 100%; background: #00ff66; transition: width 0.3s;"></div>
+  <div style="display: flex; justify-content: space-between; max-width: 650px; margin: 0 auto 15px auto; gap: 15px;">
+    <div style="flex: 1; background: #1a1a1a; height: 22px; border-radius: 12px; border: 2px solid #00e5ff; overflow: hidden; box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);">
+      <div id="hp-p1" style="width: 100%; height: 100%; background: linear-gradient(90deg, #00ff66, #aaff00); transition: width 0.2s;"></div>
     </div>
-    <div style="flex: 1; background: #333; height: 18px; border-radius: 10px; border: 1px solid #fff; overflow: hidden;">
-      <div id="hp-p2" style="width: 100%; height: 100%; background: #00ff66; transition: width 0.3s;"></div>
+    <div style="flex: 1; background: #1a1a1a; height: 22px; border-radius: 12px; border: 2px solid #ffcc00; overflow: hidden; box-shadow: 0 0 10px rgba(255, 204, 0, 0.3);">
+      <div id="hp-p2" style="width: 100%; height: 100%; background: linear-gradient(90deg, #00ff66, #aaff00); transition: width 0.2s;"></div>
     </div>
   </div>
 
-  <!-- CANVAS DEL JUEGO -->
-  <canvas id="gameCanvas" width="600" height="300" style="background: radial-gradient(circle, #1e293b 0%, #020617 100%); border: 2px solid #ffcc00; border-radius: 10px; box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);"></canvas>
+  <!-- CANVAS ESCENARIO DE PELEA -->
+  <canvas id="gameCanvas" width="650" height="320" style="border: 3px solid #ffcc00; border-radius: 12px; box-shadow: 0 0 25px rgba(255, 204, 0, 0.5); cursor: pointer;"></canvas>
 
-  <!-- CONTROLES DEL JUEGO -->
-  <div style="margin-top: 15px;">
-    <button onclick="iniciarPelea()" style="padding: 10px 25px; background: linear-gradient(45deg, #ffcc00, #ff6600); color: #000; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem;">
-      🔥 ¡INICIAR PELEA!
+  <!-- PANEL DE CONTROLES DE COMBATE -->
+  <div style="margin-top: 15px; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 10px; border: 1px solid rgba(0,229,255,0.3);">
+    <button onclick="iniciarPelea()" style="padding: 12px 30px; background: linear-gradient(45deg, #ffcc00, #ff6600); color: #000; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; font-size: 1.1rem; box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);">
+      🔥 ¡INICIAR COMBATE!
     </button>
-    <p style="color: #888; font-size: 0.8rem; margin-top: 8px;">
-      Controles: <strong>A / D</strong> para Moverte | <strong>Espacio</strong> para Atacar Ki | <strong>W</strong> para Saltarse
+    <p style="color: #00e5ff; font-size: 0.9rem; margin-top: 10px;">
+      🎮 Controles: <strong>A / D</strong> = Moverse | <strong>W</strong> = Saltar | <strong>Espacio</strong> = Ráfaga de Ki
     </p>
   </div>
 </section>
-
+  
   <div id="chatbot-container" class="chatbot-oculto">
     <div class="chatbot-header">
       <span>🤖 ASISTENTE CAPSULE CORP</span>
