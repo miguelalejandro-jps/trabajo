@@ -27,6 +27,66 @@ function analizarPoder() {
   }, 80);
 }
 
+function mostrarSeccion(id) {
+  const sections = Array.from(document.querySelectorAll('section[id]'));
+  const footer = document.getElementById('contacto');
+
+  sections.forEach((section) => {
+    const isVisible = section.id === id;
+    section.classList.toggle('section-hidden', !isVisible);
+    section.classList.toggle('seccion-activa', isVisible);
+  });
+
+  if (footer) {
+    footer.classList.toggle('section-hidden', id !== 'contacto');
+  }
+
+  const navButtons = document.querySelectorAll('.nav-btn');
+  navButtons.forEach((button) => {
+    const active = button.getAttribute('onclick') && button.getAttribute('onclick').includes(`'${id}'`);
+    button.classList.toggle('active', active);
+  });
+
+  const btnNav = document.querySelector('.btn-nav');
+  if (btnNav) {
+    btnNav.classList.toggle('active', id === 'contacto');
+  }
+}
+
+function abrirCapsulaDirecto() {
+  mostrarSeccion('capsula-section');
+  toggleCapsula(true);
+  const capsule = document.getElementById('capsulaNave');
+  if (capsule) {
+    capsule.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+function toggleCapsula(forzarEstado) {
+  const capsule = document.getElementById('capsulaNave');
+  if (!capsule) return;
+
+  const isOpen = typeof forzarEstado === 'boolean'
+    ? forzarEstado
+    : !capsule.classList.contains('capsula-abierta');
+
+  capsule.classList.toggle('capsula-abierta', isOpen);
+}
+
+function verDetalle(texto) {
+  const caja = document.getElementById('caja-detalle');
+  const detalle = document.getElementById('texto-detalle');
+  if (!caja || !detalle) return;
+
+  detalle.textContent = texto;
+  caja.classList.remove('oculto');
+}
+
+function cerrarDetalle() {
+  const caja = document.getElementById('caja-detalle');
+  if (caja) caja.classList.add('oculto');
+}
+
 // ==========================================
 // LÓGICA DE LA CALCULADORA CÁPSULA CORP
 // ==========================================
@@ -57,7 +117,7 @@ function calculateResult() {
   const display = document.getElementById('calcDisplay');
   if (!display) return;
   try {
-    display.value = eval(display.value);
+    display.value = Function(`"use strict"; return (${display.value})`)();
   } catch (error) {
     display.value = 'ERROR';
     setTimeout(() => { clearCalc(); }, 1500);
@@ -107,12 +167,14 @@ function transformarSuperSaiyan(event) {
 
   body.classList.toggle('modo-saiyan');
 
-  if (body.classList.contains('modo-saiyan')) {
-    btn.innerHTML = '⚡ MODO NORMAL (DESACTIVAR) ⚡';
-    btn.style.background = 'linear-gradient(45deg, #00e5ff, #00ff66)';
-  } else {
-    btn.innerHTML = '⚡ ¡TRANSFORMAR EN SUPER SAIYAN! ⚡';
-    btn.style.background = 'linear-gradient(45deg, #ffcc00, #ff8c00)';
+  if (btn) {
+    if (body.classList.contains('modo-saiyan')) {
+      btn.innerHTML = '⚡ MODO NORMAL (DESACTIVAR) ⚡';
+      btn.style.background = 'linear-gradient(45deg, #00e5ff, #00ff66)';
+    } else {
+      btn.innerHTML = '⚡ ¡TRANSFORMAR EN SUPER SAIYAN! ⚡';
+      btn.style.background = 'linear-gradient(45deg, #ffcc00, #ff8c00)';
+    }
   }
 }
 
@@ -120,24 +182,28 @@ function transformarSuperSaiyan(event) {
 // LÓGICA DEL LABORATORIO Y ENSAMBLAJE
 // ==========================================
 function verificarFormulaRadar() {
-  const comp1 = document.getElementById('comp1').checked;
-  const comp2 = document.getElementById('comp2').checked;
-  const comp3 = document.getElementById('comp3').checked;
+  const comp1 = document.getElementById('comp1')?.checked;
+  const comp2 = document.getElementById('comp2')?.checked;
+  const comp3 = document.getElementById('comp3')?.checked;
 
   const radarVisual = document.getElementById('radarVisual');
   const radarDot = document.getElementById('radarDot');
-  const radarStatusText = document.getElementById('radarStatusText');
+  const radarStatusTextLab = document.getElementById('radarStatusTextLab');
 
   if (comp1 && comp2 && comp3) {
     radarVisual.className = 'radar-box radar-completo';
-    radarDot.style.display = 'block';
-    radarStatusText.innerHTML = '✨ ¡RADAR DEL DRAGÓN ENSAMBLADO Y OPERATIVO!';
-    radarStatusText.style.color = '#ffcc00';
+    if (radarDot) radarDot.style.display = 'block';
+    if (radarStatusTextLab) {
+      radarStatusTextLab.innerHTML = '✨ ¡RADAR DEL DRAGÓN ENSAMBLADO Y OPERATIVO!';
+      radarStatusTextLab.style.color = '#ffcc00';
+    }
   } else {
     radarVisual.className = 'radar-box radar-incompleto';
-    radarDot.style.display = 'none';
-    radarStatusText.innerHTML = '⚠️ Estado: Faltan componentes';
-    radarStatusText.style.color = '#888';
+    if (radarDot) radarDot.style.display = 'none';
+    if (radarStatusTextLab) {
+      radarStatusTextLab.innerHTML = '⚠️ Estado: Faltan componentes';
+      radarStatusTextLab.style.color = '#888';
+    }
   }
 }
 
@@ -183,12 +249,16 @@ function toggleRadarDragon(event) {
   radarActivo = !radarActivo;
 
   if (radarActivo) {
-    statusText.innerHTML = '🟢 RASTREANDO ESFERAS DEL DRAGÓN...';
-    statusText.style.color = '#00ff66';
+    if (statusText) {
+      statusText.innerHTML = '🟢 RASTREANDO ESFERAS DEL DRAGÓN...';
+      statusText.style.color = '#00ff66';
+    }
     if (!animIdRadar) animarEscaneoRadar();
   } else {
-    statusText.innerHTML = '🔴 RADAR APAGADO (Presiona el botón superior)';
-    statusText.style.color = '#ff3300';
+    if (statusText) {
+      statusText.innerHTML = '🔴 RADAR APAGADO (Presiona el botón superior)';
+      statusText.style.color = '#ff3300';
+    }
     if (animIdRadar) {
       cancelAnimationFrame(animIdRadar);
       animIdRadar = null;
@@ -324,6 +394,9 @@ const activarVozAlClic = () => {
   window.removeEventListener('click', activarVozAlClic);
   window.removeEventListener('touchstart', activarVozAlClic);
 };
+
+window.addEventListener('click', activarVozAlClic, { once: true });
+window.addEventListener('touchstart', activarVozAlClic, { once: true });
 
 // ==========================================
 // ANIMACIÓN DE SHENLONG VOLANDO POR LA PÁGINA
@@ -550,7 +623,7 @@ window.addEventListener('DOMContentLoaded', crearModelo3DSaiyan);
 // ==========================================
 // CHATBOT INTELIGENTE CAPSULE CORP (AVANZADO)
 // ==========================================
-const CHATBOT_API_URL = 'https://tu-backend.vercel.app/api/chat';
+const CHATBOT_API_URL = '';
 
 const perfilMiguel = {
   nombre: 'Miguel Paspuel',
@@ -613,6 +686,10 @@ function obtenerRespuestaLocal(textoOriginal) {
 }
 
 async function pedirRespuestaChatbot(mensaje) {
+  if (!CHATBOT_API_URL) {
+    return obtenerRespuestaLocal(mensaje);
+  }
+
   try {
     const respuesta = await fetch(CHATBOT_API_URL, {
       method: 'POST',
@@ -697,5 +774,13 @@ window.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('chatbot-input');
   if (input) {
     input.placeholder = 'Escribe tu pregunta o “ayuda”...';
+  }
+
+  const chatBody = document.getElementById('chatbot-messages');
+  if (chatBody && !chatBody.querySelector('.message')) {
+    const saludo = document.createElement('div');
+    saludo.className = 'message bot-message';
+    saludo.textContent = '¡Hola! Soy la IA de Capsule Corp. ¿Qué deseas saber sobre Miguel Paspuel y su perfil de Ciberseguridad?';
+    chatBody.appendChild(saludo);
   }
 });
