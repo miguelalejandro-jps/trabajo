@@ -573,60 +573,49 @@ function crearModelo3DSaiyan() {
 
 window.addEventListener('DOMContentLoaded', crearModelo3DSaiyan);
 // ==========================================
-// CHATBOT CON INTELIGENCIA ARTIFICIAL (OPENAI API)
+// CHATBOT INTERACTIVO CAPSULE CORP (MODO LOCAL / GRATUITO)
 // ==========================================
-const OPENAI_API_KEY = "PEGA_AQUI_TU_CLAVE_COPIADA"; // 👈 Pega la clave entre las comillas
+function toggleChatbot() {
+  const container = document.getElementById('chatbot-container');
+  if (container) container.classList.toggle('chatbot-oculto');
+}
 
-async function enviarMensajeChatbot() {
+function detectarEnter(e) {
+  if (e.key === 'Enter') enviarMensajeChatbot();
+}
+
+function enviarMensajeChatbot() {
   const input = document.getElementById('chatbot-input');
-  const mensajeUsuario = input.value.trim();
-  if (!mensajeUsuario) return;
+  if (!input) return;
+  const texto = input.value.trim().toLowerCase();
+  if (!texto) return;
 
-  // 1. Mostrar mensaje del usuario en pantalla
-  agregarMensaje(mensajeUsuario, 'user-message');
+  // 1. Mostrar mensaje del usuario
+  agregarMensaje(input.value, 'user-message');
   input.value = '';
 
-  // 2. Indicador de carga
-  const cargandoId = agregarMensaje("⚡ Consultando a la IA...", 'bot-message');
+  // 2. Generar respuesta local del sistema Capsule Corp
+  setTimeout(() => {
+    let respuesta = "Lo siento, mi base de datos aún no procesa esa consulta. Intenta preguntarme por: 'Miguel', 'TESA', 'Ciberseguridad', 'Habilidades', 'Proyectos' o 'Dragon Ball'.";
 
-  try {
-    // 3. Petición HTTP a la API de OpenAI
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-          {
-            role: "system",
-            content: "Eres la Inteligencia Artificial de Capsule Corp y asistente virtual del portafolio de Miguel Paspuel, estudiante de Ciberseguridad en el TESA. Responde a cualquier pregunta de manera servicial, profesional y con un ligero tono futurista de Dragon Ball."
-          },
-          {
-            role: "user",
-            content: mensajeUsuario
-          }
-        ],
-        max_tokens: 300
-      })
-    });
-
-    const data = await response.json();
-
-    if (data.choices && data.choices.length > 0) {
-      document.getElementById(cargandoId).innerText = data.choices[0].message.content;
-    } else if (data.error) {
-      document.getElementById(cargandoId).innerText = "⚠️ Error de la API: " + data.error.message;
-    } else {
-      document.getElementById(cargandoId).innerText = "❌ No se obtuvo respuesta del sistema Capsule Corp.";
+    if (texto.includes('hola') || texto.includes('buenas') || texto.includes('saludos')) {
+      respuesta = "¡Saludos! Soy la IA de Capsule Corp. ¿En qué puedo asistirte sobre el portafolio de Miguel Paspuel?";
+    } else if (texto.includes('quien es') || texto.includes('miguel') || texto.includes('paspuel')) {
+      respuesta = "Miguel Paspuel es un estudiante de Ciberseguridad en el TESA, especializado en seguridad de la información, análisis de redes y desarrollo web interactivo.";
+    } else if (texto.includes('tesa') || texto.includes('carrera') || texto.includes('ciberseguridad')) {
+      respuesta = "Miguel cursa la carrera de Ciberseguridad en el Tecnológico San Antonio (TESA), enfocándose en protección de datos y análisis de vulnerabilidades.";
+    } else if (texto.includes('habilidades') || texto.includes('skills') || texto.includes('que sabe')) {
+      respuesta = "Dominio de HTML5, CSS3, JavaScript (Three.js), fundamentos de Pentesting, seguridad en redes y análisis de sistemas.";
+    } else if (texto.includes('ki') || texto.includes('saiyan') || texto.includes('poder') || texto.includes('dragon ball')) {
+      respuesta = "¡Su nivel de Ki supera los 9000! Puedes activar el modo Super Saiyan en la parte superior para cambiar la energía de la página.";
+    } else if (texto.includes('contacto') || texto.includes('correo') || texto.includes('email')) {
+      respuesta = "Puedes ponerte en contacto con Miguel mediante la sección de contacto o enlaces de redes en el pie de página.";
+    } else if (texto.includes('ayuda') || texto.includes('comandos')) {
+      respuesta = "Opciones disponibles:\n• Miguel\n• TESA / Ciberseguridad\n• Habilidades\n• Ki / Saiyan\n• Contacto";
     }
 
-  } catch (error) {
-    console.error("Error en la conexión con OpenAI:", error);
-    document.getElementById(cargandoId).innerText = "⚠️ Error de conexión con el servidor.";
-  }
+    agregarMensaje(respuesta, 'bot-message');
+  }, 400);
 }
 
 // Función para insertar los globos de texto en la ventana del chat
@@ -635,11 +624,8 @@ function agregarMensaje(texto, clase) {
   if (!body) return;
   
   const msg = document.createElement('div');
-  const idUnico = 'msg-' + Date.now();
-  msg.id = idUnico;
   msg.className = `message ${clase}`;
   msg.innerText = texto;
   body.appendChild(msg);
   body.scrollTop = body.scrollHeight;
-  return idUnico;
 }
