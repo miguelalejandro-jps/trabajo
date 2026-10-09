@@ -305,7 +305,26 @@
   <footer id="contacto" class="footer">
     <p>&copy; 2026 Creado para <strong>GitHub Pages</strong> con temática de Dragon Ball</p>
   </footer>
+<!-- BOTÓN Y VENTANA DEL CHATBOT CAPSULE CORP -->
+  <button id="chatbot-toggle-btn" onclick="toggleChatbot()" title="Abrir Asistente">
+    🤖
+  </button>
 
+  <div id="chatbot-container" class="chatbot-oculto">
+    <div class="chatbot-header">
+      <span>🤖 ASISTENTE CAPSULE CORP</span>
+      <button onclick="toggleChatbot()" class="close-btn">✖</button>
+    </div>
+    <div id="chatbot-messages" class="chatbot-body">
+      <div class="message bot-message">
+        ¡Hola! Soy la IA de Capsule Corp. ¿Qué deseas saber sobre Miguel Paspuel y su perfil de Ciberseguridad?
+      </div>
+    </div>
+    <div class="chatbot-footer">
+      <input type="text" id="chatbot-input" placeholder="Escribe un mensaje o 'ayuda'..." onkeypress="detectarEnter(event)">
+      <button onclick="enviarMensajeChatbot()">Enviar</button>
+    </div>
+  </div>
   <!-- ARCHIVO DE JAVASCRIPT INTERACTIVO -->
   <script src="script.js"></script>
 </body>
