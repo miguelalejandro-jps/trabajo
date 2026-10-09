@@ -460,3 +460,115 @@ function iniciarAnimacionShenlong() {
 
 // Activar la animación al cargar la página
 window.addEventListener('DOMContentLoaded', iniciarAnimacionShenlong);
+// ==========================================
+// MODELO 3D INTERACTIVO SUPER SAIYAN (THREE.JS)
+// ==========================================
+function crearModelo3DSaiyan() {
+  const container = document.getElementById('canvas-3d-container');
+  if (!container || typeof THREE === 'undefined') return;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 1.2, 5);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  container.appendChild(renderer.domElement);
+
+  // Iluminación
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+  scene.add(ambientLight);
+  const dirLight = new THREE.DirectionalLight(0x00e5ff, 1.2);
+  dirLight.position.set(5, 10, 7);
+  scene.add(dirLight);
+
+  // Grupo principal del personaje
+  const saiyanGroup = new THREE.Group();
+
+  // Material holográfico verde / neón estilo scouter
+  const saiyanMaterial = new THREE.MeshPhongMaterial({
+    color: 0x00ff88,
+    wireframe: true,
+    emissive: 0x004422,
+    shininess: 100
+  });
+
+  // Cabeza
+  const headGeo = new THREE.SphereGeometry(0.35, 16, 16);
+  const head = new THREE.Mesh(headGeo, saiyanMaterial);
+  head.position.y = 1.2;
+  saiyanGroup.add(head);
+
+  // Cabello Puntiagudo Saiyan
+  const hairMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffcc00,
+    wireframe: true,
+    emissive: 0x665500
+  });
+  
+  const spikePositions = [
+    [0, 1.7, 0, 0, 0, 0],
+    [-0.25, 1.6, 0, 0, 0, 0.4],
+    [0.25, 1.6, 0, 0, 0, -0.4],
+    [-0.35, 1.4, 0.1, 0, 0, 0.7],
+    [0.35, 1.4, 0.1, 0, 0, -0.7],
+    [0, 1.5, -0.2, -0.4, 0, 0]
+  ];
+
+  spikePositions.forEach(pos => {
+    const spikeGeo = new THREE.ConeGeometry(0.12, 0.6, 8);
+    const spike = new THREE.Mesh(spikeGeo, hairMaterial);
+    spike.position.set(pos[0], pos[1], pos[2]);
+    spike.rotation.set(pos[3], pos[4], pos[5]);
+    saiyanGroup.add(spike);
+  });
+
+  // Torso
+  const torsoGeo = new THREE.CylinderGeometry(0.4, 0.25, 0.8, 12);
+  const torso = new THREE.Mesh(torsoGeo, saiyanMaterial);
+  torso.position.y = 0.5;
+  saiyanGroup.add(torso);
+
+  // Extremidades (Brazos y Piernas)
+  const limbGeo = new THREE.CylinderGeometry(0.1, 0.08, 0.7, 8);
+  
+  const armL = new THREE.Mesh(limbGeo, saiyanMaterial);
+  armL.position.set(-0.5, 0.5, 0);
+  armL.rotation.z = 0.3;
+  saiyanGroup.add(armL);
+
+  const armR = new THREE.Mesh(limbGeo, saiyanMaterial);
+  armR.position.set(0.5, 0.5, 0);
+  armR.rotation.z = -0.3;
+  saiyanGroup.add(armR);
+
+  const legL = new THREE.Mesh(limbGeo, saiyanMaterial);
+  legL.position.set(-0.2, -0.2, 0);
+  saiyanGroup.add(legL);
+
+  const legR = new THREE.Mesh(limbGeo, saiyanMaterial);
+  legR.position.set(0.2, -0.2, 0);
+  saiyanGroup.add(legR);
+
+  // Aura de Ki giratoria alrededor del personaje
+  const auraGeo = new THREE.TorusGeometry(1.2, 0.02, 16, 50);
+  const auraMat = new THREE.MeshBasicMaterial({ color: 0x00e5ff, wireframe: true });
+  const auraRing = new THREE.Mesh(auraGeo, auraMat);
+  auraRing.rotation.x = Math.PI / 2;
+  saiyanGroup.add(auraRing);
+
+  scene.add(saiyanGroup);
+
+  // Animación continua de rotación
+  function animate() {
+    requestAnimationFrame(animate);
+    saiyanGroup.rotation.y += 0.015; // Hace girar al personaje en su propio eje
+    auraRing.rotation.z -= 0.03;
+    renderer.render(scene, camera);
+  }
+
+  animate();
+}
+
+window.addEventListener('DOMContentLoaded', crearModelo3DSaiyan);
