@@ -784,3 +784,173 @@ window.addEventListener('DOMContentLoaded', () => {
     chatBody.appendChild(saludo);
   }
 });
+// ==========================================
+// LÓGICA DEL MINIJUEGO DRAGON BALL 1 VS 1
+// ==========================================
+const datosPersonajes = {
+  Goku: { color: '#ffcc00', kiColor: '#00e5ff', nombre: 'Goku SSJ' },
+  Vegeta: { color: '#0088ff', kiColor: '#ffcc00', nombre: 'Vegeta' },
+  Piccolo: { color: '#00cc44', kiColor: '#ff3300', nombre: 'Piccolo' }
+};
+
+let seleccionP1 = 'Goku';
+let seleccionP2 = 'Vegeta';
+
+let juegoEnCurso = false;
+let animIdJuego = null;
+
+// Entidades del combate
+const p1 = { x: 80, y: 200, width: 35, height: 60, color: '#ffcc00', hp: 100, vy: 0, saltando: false, ráfagas: [] };
+const p2 = { x: 480, y: 200, width: 35, height: 60, color: '#0088ff', hp: 100, vy: 0, saltando: false, ráfagas: [] };
+
+function seleccionarGuerrero(nombre) {
+  seleccionP1 = nombre;
+  document.getElementById('nombre-p1').innerText = datosPersonajes[nombre].nombre;
+  p1.color = datosPersonajes[nombre].color;
+  
+  // Asignar un rival aleatorio diferente
+  const opciones = Object.keys(datosPersonajes).filter(p => p !== nombre);
+  seleccionP2 = opciones[Math.floor(Math.random() * opciones.length)];
+  document.getElementById('nombre-p2').innerText = datosPersonajes[seleccionP2].nombre + ' (IA)';
+  p2.color = datosPersonajes[seleccionP2].color;
+
+  dibujarEscenario();
+}
+
+function iniciarPelea() {
+  p1.hp = 100;
+  p2.hp = 100;
+  p1.x = 80;
+  p2.x = 480;
+  p1.ráfagas = [];
+  p2.ráfagas = [];
+  actualizarBarrasVida();
+  juegoEnCurso = true;
+
+  if (animIdJuego) cancelAnimationFrame(animIdJuego);
+  bucleJuego();
+}
+
+function actualizarBarrasVida() {
+  document.getElementById('hp-p1').style.width = Math.max(0, p1.hp) + '%';
+  document.getElementById('hp-p2').style.width = Math.max(0, p2.hp) + '%';
+}
+
+// Escuchar teclas para el Jugador 1
+const teclas = {};
+window.addEventListener('keydown', (e) => {
+  teclas[e.key.toLowerCase()] = true;
+  if (e.code === 'Space' && juegoEnCurso) {
+    lanzarKiP1();
+  }
+});
+window.addEventListener('keyup', (e) => {
+  teclas[e.key.toLowerCase()] = false;
+});
+
+function lanzarKiP1() {
+  p1.ráfagas.push({ x: p1.x + p1.width, y: p1.y + 20, vx: 8, color: datosPersonajes[seleccionP1].kiColor });
+}
+
+function lanzarKiP2() {
+  p2.ráfagas.push({ x: p2.x, y: p2.y + 20, vx: -7, color: datosPersonajes[seleccionP2].kiColor });
+}
+
+function bucleJuego() {
+  if (!juegoEnCurso) return;
+
+  const canvas = document.getElementById('gameCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  // --- CONTROLES Y FÍSICAS P1 ---
+  if (teclas['a'] && p1.x > 10) p1.x -= 4;
+  if (teclas['d'] && p1.x < canvas.width - 50) p1.x += 4;
+  if (teclas['w'] && !p1.saltando) { p1.vy = -12; p1.saltando = true; }
+
+  p1.y += p1.vy;
+  p1.vy += 0.6; // Gravedad
+  if (p1.y >= 200) { p1.y = 200; p1.saltando = false; }
+
+  // --- IA DEL RIVAL (P2) ---
+  if (Math.random() < 0.02) lanzarKiP2();
+  if (p2.x > p1.x + 120) p2.x -= 1.5;
+  if (p2.x < p1.x + 80) p2.x += 1.5;
+
+  // --- DIBUJAR ESCENARIO ---
+  ctx.fillStyle = '#0f172a';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Piso del ring
+  ctx.fillStyle = '#00e5ff';
+  ctx.fillRect(0, 260, canvas.width, 40);
+
+  // --- DIBUJAR JUGADORES ---
+  // Jugador 1
+  ctx.fillStyle = p1.color;
+  ctx.shadowColor = p1.color;
+  ctx.shadowBlur = 10;
+  ctx.fillRect(p1.x, p1.y, p1.width, p1.height);
+
+  // Jugador 2 (Rival)
+  ctx.fillStyle = p2.color;
+  ctx.shadowColor = p2.color;
+  ctx.shadowBlur = 10;
+  ctx.fillRect(p2.x, p2.y, p2.width, p2.height);
+  ctx.shadowBlur = 0;
+
+  // --- PROYECTILES KI P1 ---
+  p1.ráfagas.forEach((r, idx) => {
+    r.x += r.vx;
+    ctx.fillStyle = r.color;
+    ctx.beginPath(); ctx.arc(r.x, r.y, 8, 0, Math.PI * 2); ctx.fill();
+
+    // Impacto con P2
+    if (r.x >= p2.x && r.x <= p2.x + p2.width && r.y >= p2.y && r.y <= p2.y + p2.height) {
+      p2.hp -= 12;
+      p1.ráfagas.splice(idx, 1);
+      actualizarBarrasVida();
+    }
+  });
+
+  // --- PROYECTILES KI P2 ---
+  p2.ráfagas.forEach((r, idx) => {
+    r.x += r.vx;
+    ctx.fillStyle = r.color;
+    ctx.beginPath(); ctx.arc(r.x, r.y, 8, 0, Math.PI * 2); ctx.fill();
+
+    // Impacto con P1
+    if (r.x <= p1.x + p1.width && r.x >= p1.x && r.y >= p1.y && r.y <= p1.y + p1.height) {
+      p1.hp -= 10;
+      p2.ráfagas.splice(idx, 1);
+      actualizarBarrasVida();
+    }
+  });
+
+  // --- CONDICIONAL DE VICTORIA / DERROTA ---
+  if (p1.hp <= 0 || p2.hp <= 0) {
+    juegoEnCurso = false;
+    ctx.fillStyle = '#ffcc00';
+    ctx.font = 'bold 24px sans-serif';
+    ctx.textAlign = 'center';
+    const msg = p1.hp > 0 ? "¡VICTORIA DEL JUGADOR 1! 🎉" : "¡HAS SIDO DERROTADO! 💥";
+    ctx.fillText(msg, canvas.width / 2, 140);
+    return;
+  }
+
+  animIdJuego = requestAnimationFrame(bucleJuego);
+}
+
+function dibujarEscenario() {
+  const canvas = document.getElementById('gameCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#0f172a';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#00e5ff';
+  ctx.fillRect(0, 260, canvas.width, 40);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  seleccionarGuerrero('Goku');
+});
