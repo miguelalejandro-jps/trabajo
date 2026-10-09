@@ -330,4 +330,133 @@ const activarVozAlClic = () => {
   window.removeEventListener('click', activarVozAlClic);
   window.removeEventListener('touchstart', activarVozAlClic);
 };
+// ==========================================
+// ANIMACIÓN DE SHENLONG VOLANDO POR LA PÁGINA
+// ==========================================
+function iniciarAnimacionShenlong() {
+  const canvas = document.getElementById('shenlongCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
 
+  function ajustarTamano() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  ajustarTamano();
+  window.addEventListener('resize', ajustarTamano);
+
+  // Configuración del dragón
+  const numSegmentos = 35;
+  const tamSegmento = 12;
+  const segmentos = [];
+
+  // Posición inicial en la pantalla
+  let posX = window.innerWidth / 2;
+  let posY = window.innerHeight / 2;
+  let angulo = 0;
+  let tiempo = 0;
+
+  for (let i = 0; i < numSegmentos; i++) {
+    segmentos.push({ x: posX, y: posY });
+  }
+
+  function animar() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    tiempo += 0.02;
+
+    // Movimiento ondulante de la cabeza por la pantalla
+    angulo += Math.sin(tiempo * 0.8) * 0.03;
+    const velocidad = 3.5;
+
+    posX += Math.cos(angulo) * velocidad + Math.sin(tiempo * 0.5) * 1.5;
+    posY += Math.sin(angulo) * velocidad + Math.cos(tiempo * 0.7) * 1.5;
+
+    // Rebotar en los bordes suavemente
+    const margen = 100;
+    if (posX < -margen) posX = canvas.width + margen;
+    if (posX > canvas.width + margen) posX = -margen;
+    if (posY < -margen) posY = canvas.height + margen;
+    if (posY > canvas.height + margen) posY = -margen;
+
+    // Actualizar cuerpo (cada segmento sigue al anterior)
+    segmentos[0] = { x: posX, y: posY };
+    for (let i = 1; i < numSegmentos; i++) {
+      const prev = segmentos[i - 1];
+      const curr = segmentos[i];
+      const dx = prev.x - curr.x;
+      const dy = prev.y - curr.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist > 0) {
+        curr.x = prev.x - (dx / dist) * tamSegmento;
+        curr.y = prev.y - (dy / dist) * tamSegmento;
+      }
+    }
+
+    // 1. Dibujar el Aura de Ki alrededor de Shenlong
+    ctx.save();
+    ctx.shadowColor = '#00ff66';
+    ctx.shadowBlur = 15;
+
+    // 2. Dibujar el Cuerpo de Shenlong
+    for (let i = numSegmentos - 1; i >= 0; i--) {
+      const seg = segmentos[i];
+      const radio = (1 - i / numSegmentos) * 14 + 4; // Se estrecha hacia la cola
+
+      ctx.beginPath();
+      ctx.arc(seg.x, seg.y, radio, 0, Math.PI * 2);
+
+      // Degradado verde esmeralda místico
+      const grad = ctx.createRadialGradient(seg.x, seg.y, 2, seg.x, seg.y, radio);
+      grad.addColorStop(0, '#00ff66');
+      grad.addColorStop(0.6, '#008833');
+      grad.addColorStop(1, '#003311');
+
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+
+    // 3. Dibujar la Cabeza, Ojos y Bigotes de Shenlong
+    const cabeza = segmentos[0];
+    const cuello = segmentos[1];
+    const dirAngulo = Math.atan2(cabeza.y - cuello.y, cabeza.x - cuello.x);
+
+    ctx.save();
+    ctx.translate(cabeza.x, cabeza.y);
+    ctx.rotate(dirAngulo);
+
+    // Ojos rojos brillantes
+    ctx.fillStyle = '#ff0000';
+    ctx.shadowColor = '#ff0000';
+    ctx.shadowBlur = 10;
+    ctx.beginPath(); ctx.arc(6, -6, 3, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(6, 6, 3, 0, Math.PI * 2); ctx.fill();
+
+    // Cuernos dorados
+    ctx.strokeStyle = '#ffcc00';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(-2, -8); ctx.lineTo(-12, -18); ctx.lineTo(-18, -14);
+    ctx.moveTo(-2, 8); ctx.lineTo(-12, 18); ctx.lineTo(-18, 14);
+    ctx.stroke();
+
+    // Bigotes flotantes de dragón
+    const bigoteOnda = Math.sin(tiempo * 5) * 5;
+    ctx.strokeStyle = '#00ff66';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(10, -4); ctx.quadraticCurveTo(25, -15 + bigoteOnda, 40, -10);
+    ctx.moveTo(10, 4); ctx.quadraticCurveTo(25, 15 - bigoteOnda, 40, 10);
+    ctx.stroke();
+
+    ctx.restore();
+    ctx.restore();
+
+    requestAnimationFrame(animar);
+  }
+
+  animar();
+}
+
+// Activar la animación al cargar la página
+window.addEventListener('DOMContentLoaded', iniciarAnimacionShenlong);
