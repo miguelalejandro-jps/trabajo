@@ -923,4 +923,15 @@ body.modo-saiyan .hoja-vida-card {
 body.modo-saiyan .profile-name {
   color: #ffcc00 !important;
 }
-
+/* ==========================================
+   ANIMACIÓN DE SHENLONG POR TODA LA PÁGINA
+   ========================================== */
+#shenlongCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* Permite hacer clic en la página sin interrupciones */
+  z-index: 9999;       /* Vuela por encima de los elementos */
+}
