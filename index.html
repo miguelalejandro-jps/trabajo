@@ -14,6 +14,16 @@
 <body>
   <!-- CANVAS PARA LA ANIMACIÓN DE SHENLONG FLOTANTE -->
 <canvas id="shenlongCanvas"></canvas>
+  <!-- Cargar la librería Three.js desde CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<!-- Contenedor del Visor 3D -->
+<section id="saiyan-3d-section" style="text-align: center; margin: 40px auto; max-width: 500px;">
+  <h2 style="color: #00e5ff; font-family: sans-serif;">
+    🛸 SIMULADOR 3D <span style="color: #ffcc00;">SUPER SAIYAN</span>
+  </h2>
+  <div id="canvas-3d-container" style="width: 100%; height: 380px; background: radial-gradient(circle, #0f172a 0%, #020617 100%); border: 3px solid #00e5ff; border-radius: 20px; box-shadow: 0 0 25px rgba(0, 229, 255, 0.4); position: relative; overflow: hidden;"></div>
+</section>
 
   <!-- Auras de Ki de fondo -->
   <div class="bg-glow glow-1"></div>
